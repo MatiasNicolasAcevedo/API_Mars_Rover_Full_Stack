@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mars Rover</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="control-panel">
+        <img onclick="clickBtnRotateLeft()" class="btn-control" src="/images/rotate-left.png" alt="flecha-rotar-izquierda">
+        <img onclick="moveForward()" class="btn-control" src="/images/forward.png" alt="flecha-avanzar">
+        <img onclick="moveBack()" class="btn-control" src="/images/back.png" alt="flecha-retroceder">
+        <img onclick="clickBtnRotateRight()" class="btn-control" src="/images/rotate-right.png" alt="flecha-rotar-derecha">
+    </div>
+    <div id="container">
+        <img id="rover" src="/images/rover.png" alt="rover-image">
+        <div id="map">
+            <img src="/images/map.jpg" alt="imagen de marte">
+        </div>
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+</html>
