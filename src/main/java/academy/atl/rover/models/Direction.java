@@ -10,13 +10,12 @@ public enum Direction {
     // Valores numéricos indican la dirección en la que se debe mover un objeto cuando se desplaza en esa dirección.
     private final int value;
 
-    // Constructor
     Direction(int value) {
         this.value = value;
     }
 
-    // Método del objeto enum.
     public int getValue() {
         return value;
     }
+
 }

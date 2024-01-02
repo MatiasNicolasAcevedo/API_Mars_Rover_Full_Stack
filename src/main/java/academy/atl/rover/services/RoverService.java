@@ -8,4 +8,5 @@ public interface RoverService {
     public Rover get();
 
     void sendCommand(String command);
+
 }

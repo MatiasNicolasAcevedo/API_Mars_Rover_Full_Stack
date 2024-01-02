@@ -3,26 +3,25 @@ package academy.atl.rover.controllers;
 import academy.atl.rover.dto.ObstacleDto;
 import academy.atl.rover.models.Obstacle;
 import academy.atl.rover.services.ObstacleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("api/obstacle/")
+@RequiredArgsConstructor
 public class ObstacleController {
 
-    @Autowired
-    private ObstacleService service;
+    private final ObstacleService service;
 
-    @PostMapping("api/obstacle/")
+    @PostMapping
     public void create(@RequestBody ObstacleDto obstacle) {
         System.out.println(obstacle);
     }
 
-    @GetMapping("api/obstacle/")
+    @GetMapping
     public List<Obstacle> getAll() {
         return service.findAll();
     }

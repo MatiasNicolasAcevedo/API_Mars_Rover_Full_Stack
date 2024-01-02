@@ -7,4 +7,5 @@ public class ObstacleDto {
 
     private Integer x;
     private Integer y;
+
 }

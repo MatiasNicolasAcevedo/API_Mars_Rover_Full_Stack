@@ -5,19 +5,16 @@ import academy.atl.rover.models.Obstacle;
 import academy.atl.rover.models.Rover;
 import academy.atl.rover.repository.ObstacleRepository;
 import academy.atl.rover.repository.RoverRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RoverServiceImp implements RoverService {
 
-    @Autowired
-    RoverRepository repository;
-
-    @Autowired
-    ObstacleRepository obstacleRepository;
+    private final RoverRepository repository;
+    private final ObstacleRepository obstacleRepository;
 
     /**
      * Recuperar el primer rover de una lista de rovers de una base de datos.

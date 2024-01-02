@@ -19,7 +19,8 @@ public class Rover {
     @Column(name = "posy")
     private Integer y;
 
-    @Enumerated(EnumType.STRING) // para evitar que se cree en la tabla como número (default).
+    @Enumerated(EnumType.STRING)
     @Column(name = "direction")
     private Direction direction;
+
 }

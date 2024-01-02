@@ -2,32 +2,29 @@ package academy.atl.rover.controllers;
 
 import academy.atl.rover.dto.CommandDto;
 import academy.atl.rover.dto.RoverDto;
-import academy.atl.rover.models.Direction;
 import academy.atl.rover.models.Rover;
 import academy.atl.rover.services.RoverService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("api/rover/")
+@RequiredArgsConstructor
 public class RoverController {
 
-    @Autowired
-    RoverService service;
+    private final RoverService service;
 
-    @GetMapping("api/rover/")
+    @GetMapping
     public Rover get() {
         return service.get();
     }
 
-    @PostMapping("api/rover/")
+    @PostMapping
     public void create(@RequestBody RoverDto rover) {
         System.out.println(rover);
     }
 
-    @PostMapping("api/rover/command/")
+    @PostMapping("command/")
     public void sendCommand(@RequestBody CommandDto commands) {
         System.out.println(commands);
 
@@ -36,7 +33,5 @@ public class RoverController {
             System.out.println(command);
         }
     }
-
-
 
 }
