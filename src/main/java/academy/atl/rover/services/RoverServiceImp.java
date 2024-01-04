@@ -16,6 +16,42 @@ public class RoverServiceImp implements RoverService {
     private final RoverRepository repository;
     private final ObstacleRepository obstacleRepository;
 
+    @Override
+    public List<Rover> getAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public Rover getById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Rover create(Rover rover) {
+        // Aquí podrías realizar validaciones adicionales antes de guardar el rover en la base de datos, si es necesario.
+        return repository.save(rover);
+    }
+
+    @Override
+    public Rover update(Long id, Rover updatedRover) {
+        Rover rover = repository.findById(id).orElse(null);
+        if (rover != null) {
+            rover.setX(updatedRover.getX());
+            rover.setY(updatedRover.getY());
+            rover.setDirection(updatedRover.getDirection());
+
+            // Puedes actualizar más campos aquí según sea necesario.
+
+            return repository.save(rover);
+        }
+        return null;
+    }
+
+    @Override
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
     /**
      * Recuperar el primer rover de una lista de rovers de una base de datos.
      */

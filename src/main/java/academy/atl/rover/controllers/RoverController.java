@@ -20,18 +20,37 @@ public class RoverController {
     }
 
     @PostMapping
-    public void create(@RequestBody RoverDto rover) {
-        System.out.println(rover);
+    public Rover create(@RequestBody RoverDto roverDto) {
+        Rover rover = convertToRover(roverDto); // Puedes tener un método para convertir el DTO a la entidad Rover
+        return service.create(rover);
+    }
+
+    @PutMapping("{id}")
+    public Rover update(@PathVariable Long id, @RequestBody RoverDto updatedRoverDto) {
+        Rover updatedRover = convertToRover(updatedRoverDto); // Puedes tener un método para convertir el DTO a la entidad Rover
+        return service.update(id, updatedRover);
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
     }
 
     @PostMapping("command/")
     public void sendCommand(@RequestBody CommandDto commands) {
-        System.out.println(commands);
-
         for (String command : commands.getCommands()) {
             service.sendCommand(command);
-            System.out.println(command);
         }
     }
 
+    // Método para convertir RoverDto a Rover (puedes ajustar según la estructura de tus clases)
+    private Rover convertToRover(RoverDto roverDto) {
+        Rover rover = new Rover();
+        rover.setX(roverDto.getX());
+        rover.setY(roverDto.getY());
+        rover.setDirection(roverDto.getDirection());
+        // Puedes mapear más campos según sea necesario
+        return rover;
+    }
 }
+
