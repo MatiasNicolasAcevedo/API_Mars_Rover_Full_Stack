@@ -9,8 +9,6 @@ public interface RoverService {
 
     public void sendCommand(String command);
 
-    public void delete(Long id);
-
     List<Rover> getAll(); // Método para obtener todos los Rovers
 
     Rover getById(Long id); // Método para obtener un Rover por su ID
