@@ -9,4 +9,5 @@ public class RoverDto {
     private Integer x;
     private Integer y;
     private Direction direction;
+
 }
