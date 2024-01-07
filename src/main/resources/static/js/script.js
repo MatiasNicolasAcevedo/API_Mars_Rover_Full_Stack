@@ -79,7 +79,7 @@ async function sendCommand(command) {
 
 function playMoveSound() {
     var audioElement = document.createElement("audio");
-    audioElement.src = "sounds/move.wav";
+    audioElement.src = "sounds/move.mp3";
     audioElement.controls = true;
     audioElement.autoplay = true;
     document.getElementById("container").appendChild(audioElement);
