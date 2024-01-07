@@ -74,10 +74,41 @@ function moveRover(x, y) {
 
 // Resto del código para la creación de obstáculos, manejo de eventos de botones, etc.
 
-// Función para inicializar el mapa al cargar la página
+// Función para generar un número aleatorio dentro de un rango
+function getRandomPosition(max) {
+    return Math.floor(Math.random() * max);
+}
+
+// Función para crear un rover en una posición aleatoria en el backend
+async function createRandomRover() {
+    const maxX = 10; // Cambia el valor máximo según el tamaño de tu mapa
+    const maxY = 10; // Cambia el valor máximo según el tamaño de tu mapa
+
+    const randomX = getRandomPosition(maxX);
+    const randomY = getRandomPosition(maxY);
+    const randomDirection = ['N', 'E', 'S', 'W'][getRandomPosition(4)]; // Dirección aleatoria
+
+    return await createRover(randomX, randomY, randomDirection);
+}
+
+// Función para crear obstáculos en posiciones aleatorias en el backend
+async function createRandomObstacles(numberOfObstacles) {
+    const maxX = 10; // Cambia el valor máximo según el tamaño de tu mapa
+    const maxY = 10; // Cambia el valor máximo según el tamaño de tu mapa
+
+    for (let i = 0; i < numberOfObstacles; i++) {
+        const randomX = getRandomPosition(maxX);
+        const randomY = getRandomPosition(maxY);
+        await createObstacle(randomX, randomY);
+    }
+}
+
+// Resto del código...
+
+// Función para inicializar el mapa con posiciones aleatorias
 async function initializeMap() {
-    await createRover(0, 0, 'N'); // Crear el rover en la posición inicial
-    await createObstacles(); // Crear obstáculos en el mapa
+    await createRandomRover(); // Crear el rover en una posición aleatoria
+    await createRandomObstacles(5); // Crear 5 obstáculos aleatorios
     await refreshRover(); // Actualizar la posición del rover
 }
 
