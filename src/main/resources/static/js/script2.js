@@ -105,6 +105,34 @@ async function createRandomObstacles(numberOfObstacles) {
 
 // Resto del código...
 
+// Resto del código...
+
+// Función para enviar un movimiento al servidor y actualizar la posición del rover en la interfaz
+async function moveRoverAndRefresh(command) {
+    await sendCommand(command); // Envía el comando al backend para mover el rover
+    await refreshRover(); // Actualiza la posición del rover en la interfaz
+}
+
+// Funciones para manejar los eventos de movimiento
+function clickBtnRotateLeft() {
+    moveRoverAndRefresh("L");
+}
+
+function clickBtnRotateRight() {
+    moveRoverAndRefresh("R");
+}
+
+async function moveForward() {
+    await moveRoverAndRefresh("F");
+}
+
+function moveBack() {
+    moveRoverAndRefresh("B");
+}
+
+// Resto del código...
+
+
 // Función para inicializar el mapa con posiciones aleatorias
 async function initializeMap() {
     await createRandomRover(); // Crear el rover en una posición aleatoria
