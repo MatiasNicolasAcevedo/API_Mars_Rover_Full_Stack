@@ -1,5 +1,3 @@
-// Funciones para comunicarse con el backend
-
 async function createRover(x, y, direction) {
     const roverData = {
         x: x,
@@ -28,7 +26,6 @@ async function getRover() {
 
     return await response.json();
 }
-
 
 async function createObstacle(x, y) {
     const obstacleData = {
@@ -79,7 +76,6 @@ async function createRandomObstacles(numberOfObstacles) {
     }
 }
 
-// Funciones relacionadas con la actualización del rover en la interfaz
 async function refreshRover() {
     const roverJson = await getRover();
     moveRover(roverJson.x, roverJson.y);
@@ -91,9 +87,19 @@ function moveRover(x, y) {
     playMoveSound();
 }
 
-// Resto del código...
+function playMoveSound() {
+    var audioElement = document.createElement("audio");
+    audioElement.src = "sounds/move.mp3";
+    audioElement.controls = true;
+    audioElement.autoplay = true;
+    document.getElementById("container").appendChild(audioElement);
+}
 
-// Funciones para manejar los eventos de movimiento del rover
+document.getElementById("btnRotateLeft").addEventListener("click", clickBtnRotateLeft);
+document.getElementById("btnRotateRight").addEventListener("click", clickBtnRotateRight);
+document.getElementById("btnMoveForward").addEventListener("click", moveForward);
+document.getElementById("btnMoveBack").addEventListener("click", moveBack);
+
 async function moveRoverAndRefresh(command) {
     await sendCommand(command);
     await refreshRover();
@@ -129,11 +135,14 @@ async function sendCommand(command) {
     });
 }
 
-// Función para inicializar el mapa al cargar la página
-async function initializeMap() {
-    await createRandomRover();
-    await createRandomObstacles(5);
-    await refreshRover();
+function initializeMap() {
+    createRandomRover();
+    createRandomObstacles(5);
+    refreshRover();
 }
 
 initializeMap();
+
+function getRandomPosition(max) {
+    return Math.floor(Math.random() * max);
+}
