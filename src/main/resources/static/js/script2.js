@@ -1,10 +1,10 @@
-// Funciones relacionadas con la creación y manejo del rover y los obstáculos
+// Funciones para comunicarse con el backend
+
 async function createRover(x, y, direction) {
     const roverData = {
         x: x,
         y: y,
         direction: direction
-        // Puedes agregar más campos según la estructura de tu rover
     };
 
     const response = await fetch('/api/rover/', {
@@ -18,11 +18,22 @@ async function createRover(x, y, direction) {
     return await response.json();
 }
 
+async function getRover() {
+    const response = await fetch('/api/rover/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    return await response.json();
+}
+
+
 async function createObstacle(x, y) {
     const obstacleData = {
         x: x,
         y: y
-        // Puedes agregar más campos según la estructura de tus obstáculos
     };
 
     await fetch('/api/obstacle/', {
@@ -70,13 +81,7 @@ async function createRandomObstacles(numberOfObstacles) {
 
 // Funciones relacionadas con la actualización del rover en la interfaz
 async function refreshRover() {
-    const roverResponse = await fetch('/api/rover/', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    const roverJson = await roverResponse.json();
+    const roverJson = await getRover();
     moveRover(roverJson.x, roverJson.y);
 }
 
@@ -110,7 +115,19 @@ function moveBack() {
     moveRoverAndRefresh("B");
 }
 
-// Resto del código...
+async function sendCommand(command) {
+    const requestBody = {
+        "commands": [command]
+    };
+
+    await fetch('/api/rover/command/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+    });
+}
 
 // Función para inicializar el mapa al cargar la página
 async function initializeMap() {
