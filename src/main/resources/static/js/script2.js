@@ -1,6 +1,5 @@
-// Función para crear un rover en el backend
+// Funciones relacionadas con la creación y manejo del rover y los obstáculos
 async function createRover(x, y, direction) {
-    // Datos del rover a enviar al backend
     const roverData = {
         x: x,
         y: y,
@@ -8,7 +7,6 @@ async function createRover(x, y, direction) {
         // Puedes agregar más campos según la estructura de tu rover
     };
 
-    // Petición POST para crear un rover
     const response = await fetch('/api/rover/', {
         method: 'POST',
         headers: {
@@ -17,25 +15,9 @@ async function createRover(x, y, direction) {
         body: JSON.stringify(roverData)
     });
 
-    return await response.json(); // Devuelve la respuesta del servidor
+    return await response.json();
 }
 
-// Función para obtener y crear obstáculos desde el backend
-async function createObstacles() {
-    // Datos de ejemplo de obstáculos
-    const obstacleData = [
-        { x: 1, y: 2 },
-        { x: 3, y: 4 },
-        // Puedes agregar más obstáculos aquí
-    ];
-
-    // Iterar sobre los datos de los obstáculos y crearlos uno por uno
-    for (const obstacle of obstacleData) {
-        await createObstacle(obstacle.x, obstacle.y);
-    }
-}
-
-// Función para crear un obstáculo en el backend
 async function createObstacle(x, y) {
     const obstacleData = {
         x: x,
@@ -43,7 +25,6 @@ async function createObstacle(x, y) {
         // Puedes agregar más campos según la estructura de tus obstáculos
     };
 
-    // Petición POST para crear un obstáculo
     await fetch('/api/obstacle/', {
         method: 'POST',
         headers: {
@@ -53,33 +34,18 @@ async function createObstacle(x, y) {
     });
 }
 
-// Función para obtener la posición del rover desde el backend y actualizar su posición en la interfaz
-async function refreshRover() {
-    const roverResponse = await fetch('/api/rover/', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    const roverJson = await roverResponse.json();
-    moveRover(roverJson.x, roverJson.y); // Actualiza la posición del rover en la interfaz
+async function createObstacles() {
+    const obstacleData = [
+        { x: 1, y: 2 },
+        { x: 3, y: 4 },
+        // Puedes agregar más obstáculos aquí
+    ];
+
+    for (const obstacle of obstacleData) {
+        await createObstacle(obstacle.x, obstacle.y);
+    }
 }
 
-// Función para mover visualmente el rover en la interfaz
-function moveRover(x, y) {
-    document.getElementById("rover").style.left = (x * 100) + 'px';
-    document.getElementById("rover").style.top = (y * 100) + 'px';
-    playMoveSound(); // Reproduce un sonido al mover el rover
-}
-
-// Resto del código para la creación de obstáculos, manejo de eventos de botones, etc.
-
-// Función para generar un número aleatorio dentro de un rango
-function getRandomPosition(max) {
-    return Math.floor(Math.random() * max);
-}
-
-// Función para crear un rover en una posición aleatoria en el backend
 async function createRandomRover() {
     const maxX = 10; // Cambia el valor máximo según el tamaño de tu mapa
     const maxY = 10; // Cambia el valor máximo según el tamaño de tu mapa
@@ -91,7 +57,6 @@ async function createRandomRover() {
     return await createRover(randomX, randomY, randomDirection);
 }
 
-// Función para crear obstáculos en posiciones aleatorias en el backend
 async function createRandomObstacles(numberOfObstacles) {
     const maxX = 10; // Cambia el valor máximo según el tamaño de tu mapa
     const maxY = 10; // Cambia el valor máximo según el tamaño de tu mapa
@@ -103,17 +68,32 @@ async function createRandomObstacles(numberOfObstacles) {
     }
 }
 
-// Resto del código...
-
-// Resto del código...
-
-// Función para enviar un movimiento al servidor y actualizar la posición del rover en la interfaz
-async function moveRoverAndRefresh(command) {
-    await sendCommand(command); // Envía el comando al backend para mover el rover
-    await refreshRover(); // Actualiza la posición del rover en la interfaz
+// Funciones relacionadas con la actualización del rover en la interfaz
+async function refreshRover() {
+    const roverResponse = await fetch('/api/rover/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const roverJson = await roverResponse.json();
+    moveRover(roverJson.x, roverJson.y);
 }
 
-// Funciones para manejar los eventos de movimiento
+function moveRover(x, y) {
+    document.getElementById("rover").style.left = (x * 100) + 'px';
+    document.getElementById("rover").style.top = (y * 100) + 'px';
+    playMoveSound();
+}
+
+// Resto del código...
+
+// Funciones para manejar los eventos de movimiento del rover
+async function moveRoverAndRefresh(command) {
+    await sendCommand(command);
+    await refreshRover();
+}
+
 function clickBtnRotateLeft() {
     moveRoverAndRefresh("L");
 }
@@ -132,12 +112,11 @@ function moveBack() {
 
 // Resto del código...
 
-
-// Función para inicializar el mapa con posiciones aleatorias
+// Función para inicializar el mapa al cargar la página
 async function initializeMap() {
-    await createRandomRover(); // Crear el rover en una posición aleatoria
-    await createRandomObstacles(5); // Crear 5 obstáculos aleatorios
-    await refreshRover(); // Actualizar la posición del rover
+    await createRandomRover();
+    await createRandomObstacles(5);
+    await refreshRover();
 }
 
-initializeMap(); // Llama a la función para inicializar el mapa al cargar la página
+initializeMap();
